@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Reservas</title>
+</head>
+<body>
+    <h1>Hotel Reservas</h1>
+
+    <form id="reservaForm">
+        <label for="idHabitacion">Habitación:</label>
+        <input type="text" id="idHabitacion" name="idHabitacion" required>
+
+        <label for="fechaInicio">Fecha Inicio:</label>
+        <input type="date" id="fechaInicio" name="fechaInicio" required>
+
+        <label for="fechaFin">Fecha Fin:</label>
+        <input type="date" id="fechaFin" name="fechaFin" required>
+
+        <label for="numeroPersonas">Número de Personas:</label>
+        <input type="number" id="numeroPersonas" name="numeroPersonas" required>
+
+        <!-- Agrega otros campos según sea necesario -->
+
+        <button type="button" onclick="guardarReserva()">Guardar Reserva</button>
+    </form>
+
+    <script>
+        function guardarReserva() {
+            const idHabitacion = document.getElementById('idHabitacion').value;
+            const fechaInicio = document.getElementById('fechaInicio').value;
+            const fechaFin = document.getElementById('fechaFin').value;
+            const numeroPersonas = document.getElementById('numeroPersonas').value;
+
+            const reservaData = {
+                idHabitacion: idHabitacion,
+                fechaInicio: fechaInicio,
+                fechaFin: fechaFin,
+                numeroPersonas: numeroPersonas
+                // Agrega otros campos según sea necesario
+            };
+
+            // Realizar la solicitud al backend
+            fetch('http://localhost:3000/reservas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(reservaData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+                // Puedes manejar la respuesta del servidor aquí
+            })
+            .catch(error => {
+                console.error('Error al realizar la solicitud:', error);
+            });
+        }
+    </script>
+</body>
+</html>
